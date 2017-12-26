@@ -2,7 +2,6 @@ package com.igornm.financialcontrol.extension
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 
 /**
  * Created by igor on 25/12/17.

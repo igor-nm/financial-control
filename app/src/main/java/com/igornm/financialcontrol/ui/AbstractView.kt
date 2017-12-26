@@ -19,23 +19,23 @@ class AbstractView(context: Context,
                    private val view: View)
 {
     private val abstract     = Abstract(transactions)
-    private val recipeColor  = ContextCompat.getColor(context, R.color.receita);
+    private val incomeColor  = ContextCompat.getColor(context, R.color.receita);
     private val expenseColor = ContextCompat.getColor(context, R.color.despesa);
 
     fun update()
     {
-        addRecipe();
+        addIncome();
         addExpense();
         addTotal();
     }
 
-    private fun addRecipe()
+    private fun addIncome()
     {
-        val recipeTotal = abstract.recipe;
+        val recipeTotal = abstract.income;
 
         with(view.resumo_card_receita)
         {
-            setTextColor(recipeColor);
+            setTextColor(incomeColor);
             text = recipeTotal.convertForCoinBrazilian();
         }
     }
@@ -67,7 +67,7 @@ class AbstractView(context: Context,
     {
         if(valor >= BigDecimal.ZERO)
         {
-            return recipeColor;
+            return incomeColor;
         }
         return expenseColor;
     }

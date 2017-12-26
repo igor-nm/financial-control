@@ -26,7 +26,9 @@ class TransactionListAdapter(private val transactions : List<Transaction>,
     override fun getView(position : Int, view : View?, parent : ViewGroup?) : View
     {
         val newView = LayoutInflater
-                .from(context).inflate(R.layout.transacao_item, parent, false);
+                .from(context)
+                .inflate(R.layout.transacao_item, parent, false);
+
         val transaction = transactions[position];
 
         addValue(transaction, newView)
@@ -55,7 +57,7 @@ class TransactionListAdapter(private val transactions : List<Transaction>,
 
     private fun getIcon(transaction : Transaction) : Int
     {
-        if(transaction.type == Type.RECEITA)
+        if(transaction.type == Type.INCOME)
         {
             return R.drawable.icone_transacao_item_receita;
         }
@@ -71,7 +73,7 @@ class TransactionListAdapter(private val transactions : List<Transaction>,
 
     private fun getColor(transaction : Transaction) : Int
     {
-        if(transaction.type == Type.RECEITA)
+        if(transaction.type == Type.INCOME)
         {
             return ContextCompat.getColor(context, R.color.receita);
         }

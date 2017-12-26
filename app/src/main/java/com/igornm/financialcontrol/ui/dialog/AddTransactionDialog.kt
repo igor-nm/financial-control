@@ -56,7 +56,7 @@ class AddTransactionDialog(private val viewGroup : ViewGroup,
 
     private fun getTitle(type : Type) : Int
     {
-        if(type == Type.RECEITA)
+        if(type == Type.INCOME)
         {
             return R.string.adiciona_receita;
         }
@@ -65,7 +65,7 @@ class AddTransactionDialog(private val viewGroup : ViewGroup,
 
     private fun getCategories(type : Type) : Int
     {
-        if(type == Type.RECEITA)
+        if(type == Type.INCOME)
         {
             return R.array.categorias_de_receita;
         }

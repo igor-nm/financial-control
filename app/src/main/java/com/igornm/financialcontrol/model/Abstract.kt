@@ -8,11 +8,11 @@ import java.math.BigDecimal
 
 class Abstract(private val transactions: List<Transaction>)
 {
-    val recipe get() = sumTotalByType(Type.RECEITA);
+    val income get() = sumTotalByType(Type.INCOME);
 
-    val expense get() = sumTotalByType(Type.DESPESA);
+    val expense get() = sumTotalByType(Type.EXPENSE);
 
-    val total : BigDecimal get() = recipe.subtract(expense);
+    val total : BigDecimal get() = income.subtract(expense);
 
     private fun sumTotalByType(type: Type) : BigDecimal
     {

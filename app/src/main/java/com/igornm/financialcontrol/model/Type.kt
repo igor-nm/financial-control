@@ -6,6 +6,6 @@ package com.igornm.financialcontrol.model
 
 enum class Type
 {
-    RECEITA,
-    DESPESA
+    INCOME,
+    EXPENSE
 }
