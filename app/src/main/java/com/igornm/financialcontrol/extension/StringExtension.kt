@@ -11,7 +11,7 @@ import java.util.Date
 
 private val FORMAT_BRAZILIAN = SimpleDateFormat("dd/MM/yyyy");
 
-fun String.convertStringForCalendar() : Calendar
+fun String.convertForCalendar() : Calendar
 {
     val calendar : Calendar = Calendar.getInstance();
     val date : Date = FORMAT_BRAZILIAN.parse(this);
@@ -19,7 +19,7 @@ fun String.convertStringForCalendar() : Calendar
     return calendar;
 }
 
-fun String.isValidCoin() : BigDecimal
+fun String.convertForBigDecimal() : BigDecimal
 {
     if (!this.isEmpty()) {
         return BigDecimal(this);

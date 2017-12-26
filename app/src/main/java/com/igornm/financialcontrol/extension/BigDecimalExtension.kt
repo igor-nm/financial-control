@@ -14,5 +14,5 @@ fun BigDecimal.convertForCoinBrazilian() : String
     return formatBrazilian
             .format(this)
             .replace("R$", "R$ ")
-            .replace("-R$ ", "R$ ");
+            .replace("-R$ ", "R$ -");
 }

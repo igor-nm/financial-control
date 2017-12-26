@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.igornm.financialcontrol.R
 import com.igornm.financialcontrol.model.Transaction
-import com.igornm.financialcontrol.extension.convertCalendarForString
+import com.igornm.financialcontrol.extension.calendarForString
 import com.igornm.financialcontrol.extension.convertForCoinBrazilian
 import com.igornm.financialcontrol.extension.limitAtCharacter
 import com.igornm.financialcontrol.model.Type
@@ -39,7 +39,7 @@ class TransactionListAdapter(private val transactions : List<Transaction>,
 
     private fun addDate(newView : View, transaction : Transaction)
     {
-        newView.transacao_data.text = transaction.date.convertCalendarForString();
+        newView.transacao_data.text = transaction.date.calendarForString();
     }
 
     private fun addCategory(newView : View, transaction : Transaction)

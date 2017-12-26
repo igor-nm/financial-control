@@ -10,15 +10,7 @@ import java.util.Date
 
 private val FORMAT_BRAZILIAN = SimpleDateFormat("dd/MM/yyyy");
 
-fun Calendar.convertCalendarForString() : String
+fun Calendar.calendarForString() : String
 {
     return FORMAT_BRAZILIAN.format(this.time);
-}
-
-fun convertStringForCalendar(dateText : String) : Calendar
-{
-    val calendar : Calendar = Calendar.getInstance();
-    val date : Date = FORMAT_BRAZILIAN.parse(dateText);
-    calendar.time = date;
-    return calendar;
 }
