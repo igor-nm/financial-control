@@ -5,7 +5,8 @@ import com.igornm.financialcontrol.model.Transaction
 /**
  * Created by igor on 26/12/17.
  */
-interface TrasactionDeletegate
+
+interface TransactionDelegate
 {
-    fun delegate(trasaction: Transaction);
+    fun delegate(transaction : Transaction);
 }

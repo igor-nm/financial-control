@@ -2,15 +2,14 @@ package com.igornm.financialcontrol.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.view.ViewGroup
 import com.igornm.financialcontrol.R
-import com.igornm.financialcontrol.delegate.TrasactionDeletegate
 import com.igornm.financialcontrol.model.Transaction
 import com.igornm.financialcontrol.model.Type
 import com.igornm.financialcontrol.ui.AbstractView
 import com.igornm.financialcontrol.ui.adapter.TransactionListAdapter
 import com.igornm.financialcontrol.ui.dialog.AddTransactionDialog
+import com.igornm.financialcontrol.ui.dialog.UpdateTransactionDialog
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 
 /**
@@ -20,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 class TransactionListActitivty: AppCompatActivity()
 {
     private val transactions: MutableList<Transaction> = mutableListOf();
+    private val viewActivity by lazy{ window.decorView };
+    private val viewGroupActivity by lazy { viewActivity as ViewGroup }
 
     override fun onCreate(savedInstanceState : Bundle?)
     {
@@ -28,45 +29,68 @@ class TransactionListActitivty: AppCompatActivity()
 
         abstractSettings();
         listSettings();
-        fabSettings()
+        fabSettings();
     }
 
     private fun fabSettings()
     {
-        lista_transacoes_adiciona_receita.setOnClickListener { showDialogTransaction(Type.INCOME); };
-        lista_transacoes_adiciona_despesa.setOnClickListener { showDialogTransaction(Type.EXPENSE); };
+        lista_transacoes_adiciona_receita.setOnClickListener { showDialogTransactionAdd(Type.INCOME); };
+        lista_transacoes_adiciona_despesa.setOnClickListener { showDialogTransactionAdd(Type.EXPENSE); };
     }
 
-    private fun showDialogTransaction(type: Type)
+    private fun showDialogTransactionAdd(type: Type)
     {
         lista_transacoes_adiciona_menu.close(true);
-        AddTransactionDialog(window.decorView as ViewGroup, this)
-                .dialogSettings(type, object: TrasactionDeletegate
-                {
-                    override fun delegate(trasaction : Transaction)
-                    {
-                        updateTransactions(trasaction);
-                    }
-                })
+        AddTransactionDialog(viewGroupActivity, this)
+                .dialogSettings(type) { newTransaction ->
+                    addTransaction(newTransaction)
+                }
+
     }
 
-    private fun updateTransactions(transaction : Transaction)
+    private fun addTransaction(transaction : Transaction)
     {
         transactions.add(transaction);
+        updateTransactions();
+    }
+
+    private fun updateTransactions()
+    {
         abstractSettings();
         listSettings();
     }
 
     private fun abstractSettings()
     {
-        val view : View = window.decorView;
-        val abstractView = AbstractView(this, transactions, view);
+        val abstractView = AbstractView(this, transactions, viewActivity);
 
         abstractView.update()
     }
 
     private fun listSettings()
     {
-        lista_transacoes_listview.adapter = TransactionListAdapter(transactions, this);
+        val listTransactionAdapter = TransactionListAdapter(transactions, this);
+        with(lista_transacoes_listview)
+        {
+            adapter = listTransactionAdapter;
+            setOnItemClickListener { _, _, position, _ ->
+                val transaction = transactions[position];
+                showDialogTransactionUpdate(transaction, position)
+            }
+        }
+    }
+
+    private fun showDialogTransactionUpdate(transaction : Transaction, position : Int)
+    {
+        UpdateTransactionDialog(viewGroupActivity, this).
+                dialogSettings(transaction) {updatedTransaction ->
+                    updateTransaction(updatedTransaction, position)
+                }
+    }
+
+    private fun updateTransaction(transaction : Transaction, position : Int)
+    {
+        transactions[position] = transaction;
+        updateTransactions();
     }
 }
