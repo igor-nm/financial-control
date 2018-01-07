@@ -8,18 +8,18 @@ import java.math.BigDecimal
 
 class Abstract(private val transactions: List<Transaction>)
 {
-    val income get() = sumTotalByType(Type.INCOME);
+    val income get() = sumTotalByType(Type.INCOME)
 
-    val expense get() = sumTotalByType(Type.EXPENSE);
+    val expense get() = sumTotalByType(Type.EXPENSE)
 
-    val total : BigDecimal get() = income.subtract(expense);
+    val total : BigDecimal get() = income.subtract(expense)
 
     private fun sumTotalByType(type: Type) : BigDecimal
     {
         val sumTransactionByType : Double = transactions
-                                                .filter{ it.type == type; }
-                                                .sumByDouble{ it.value.toDouble(); };
-        return BigDecimal(sumTransactionByType);
+                                                .filter{ it.type == type }
+                                                .sumByDouble{ it.value.toDouble() }
+        return BigDecimal(sumTransactionByType)
     }
 
 }

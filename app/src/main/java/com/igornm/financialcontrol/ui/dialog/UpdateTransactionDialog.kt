@@ -16,13 +16,13 @@ class UpdateTransactionDialog(
         private val context : Context) : TransactionDialog(context, viewGroup)
 {
     override val titlePositiveButton : String
-        get() = "Alterar";
+        get() = "Alterar"
 
     fun dialogSettings(transaction : Transaction, transactionDelegate: (transition: Transaction) -> Unit)
     {
-        val type = transaction.type;
+        val type = transaction.type
 
-        super.dialogSettings(type, transactionDelegate);
+        super.dialogSettings(type, transactionDelegate)
 
         initFields(transaction)
     }
@@ -36,28 +36,28 @@ class UpdateTransactionDialog(
 
     private fun initializeFieldCategory(transaction : Transaction)
     {
-        val type = transaction.type;
-        val categories = context.resources.getStringArray(getCategories(type));
-        val categoryPosition = categories.indexOf(transaction.category);
-        categoryField.setSelection(categoryPosition, true);
+        val type = transaction.type
+        val categories = context.resources.getStringArray(getCategories(type))
+        val categoryPosition = categories.indexOf(transaction.category)
+        categoryField.setSelection(categoryPosition, true)
     }
 
     private fun initializeFieldDate(transaction : Transaction)
     {
-        dateField.setText(transaction.date.calendarForString());
+        dateField.setText(transaction.date.calendarForString())
     }
 
     private fun initializeValueField(transaction : Transaction)
     {
-        valueField.setText(transaction.value.toString());
+        valueField.setText(String.format("%s" , transaction.value))
     }
 
     override fun getTitle(type : Type) : Int
     {
         if(type == Type.INCOME)
         {
-            return R.string.altera_receita;
+            return R.string.altera_receita
         }
-        return R.string.altera_despesa;
+        return R.string.altera_despesa
     }
 }

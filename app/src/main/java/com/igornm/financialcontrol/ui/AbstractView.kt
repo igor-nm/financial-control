@@ -16,50 +16,50 @@ import java.math.BigDecimal
 
 class AbstractView(context: Context,
                    transactions: List<Transaction>,
-                   private val view: View)
+                   private val view: View,
+                   private val incomeColor : Int = ContextCompat.getColor(context, R.color.receita))
 {
     private val abstract     = Abstract(transactions)
-    private val incomeColor  = ContextCompat.getColor(context, R.color.receita);
-    private val expenseColor = ContextCompat.getColor(context, R.color.despesa);
+    private val expenseColor = ContextCompat.getColor(context, R.color.despesa)
 
     fun update()
     {
-        addIncome();
-        addExpense();
-        addTotal();
+        addIncome()
+        addExpense()
+        addTotal()
     }
 
     private fun addIncome()
     {
-        val recipeTotal = abstract.income;
+        val recipeTotal = abstract.income
 
         with(view.resumo_card_receita)
         {
-            setTextColor(incomeColor);
-            text = recipeTotal.convertForCoinBrazilian();
+            setTextColor(incomeColor)
+            text = recipeTotal.convertForCoinBrazilian()
         }
     }
 
     private fun addExpense()
     {
-        val expenseTotal = abstract.expense;
+        val expenseTotal = abstract.expense
 
         with(view.resumo_card_despesa)
         {
-            setTextColor(expenseColor);
-            text = expenseTotal.convertForCoinBrazilian();
+            setTextColor(expenseColor)
+            text = expenseTotal.convertForCoinBrazilian()
         }
     }
 
     private fun addTotal()
     {
-        val total = abstract.total;
-        val color = getColorTotal(total);
+        val total = abstract.total
+        val color = getColorTotal(total)
 
         with(view.resumo_card_total)
         {
-            setTextColor(color);
-            text = total.convertForCoinBrazilian();
+            setTextColor(color)
+            text = total.convertForCoinBrazilian()
         }
     }
 
@@ -67,8 +67,8 @@ class AbstractView(context: Context,
     {
         if(valor >= BigDecimal.ZERO)
         {
-            return incomeColor;
+            return incomeColor
         }
-        return expenseColor;
+        return expenseColor
     }
 }

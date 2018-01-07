@@ -9,22 +9,22 @@ import java.util.Date
  * Created by igor on 25/12/17.
  */
 
-private val FORMAT_BRAZILIAN = SimpleDateFormat("dd/MM/yyyy");
+private val FORMAT_BRAZILIAN = SimpleDateFormat("dd/MM/yyyy")
 
 fun String.convertForCalendar() : Calendar
 {
-    val calendar : Calendar = Calendar.getInstance();
-    val date : Date = FORMAT_BRAZILIAN.parse(this);
-    calendar.time = date;
-    return calendar;
+    val calendar : Calendar = Calendar.getInstance()
+    val date : Date = FORMAT_BRAZILIAN.parse(this)
+    calendar.time = date
+    return calendar
 }
 
 fun String.convertForBigDecimal() : BigDecimal
 {
     if (!this.isEmpty()) {
-        return BigDecimal(this);
+        return BigDecimal(this)
     }
-    return BigDecimal.ZERO;
+    return BigDecimal.ZERO
 }
 
 fun String.limitAtCharacter(character_limit: Int) : String
@@ -34,5 +34,5 @@ fun String.limitAtCharacter(character_limit: Int) : String
         val first_character = 0
         return "${this.substring(first_character, character_limit)}..."
     }
-    return this;
+    return this
 }

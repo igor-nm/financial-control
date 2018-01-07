@@ -13,15 +13,15 @@ class AddTransactionDialog(viewGroup : ViewGroup,
                            context : Context): TransactionDialog(context, viewGroup)
 {
     override val titlePositiveButton : String
-        get() = "Adicionar";
+        get() = "Adicionar"
 
     override fun getTitle(type : Type) : Int
     {
         if(type == Type.INCOME)
         {
-            return R.string.adiciona_receita;
+            return R.string.adiciona_receita
         }
-        return R.string.adiciona_despesa;
+        return R.string.adiciona_despesa
     }
 
 }
