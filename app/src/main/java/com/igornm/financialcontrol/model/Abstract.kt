@@ -17,8 +17,8 @@ class Abstract(private val transactions: List<Transaction>)
     private fun sumTotalByType(type: Type) : BigDecimal
     {
         val sumTransactionByType : Double = transactions
-                                                .filter{ it.type == type }
-                                                .sumByDouble{ it.value.toDouble() }
+                                                .filter{ transaction ->  transaction.type == type }
+                                                .sumByDouble{ transaction ->  transaction.value.toDouble() }
         return BigDecimal(sumTransactionByType)
     }
 

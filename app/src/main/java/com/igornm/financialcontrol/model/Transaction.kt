@@ -7,7 +7,8 @@ import java.util.Calendar
  * Created by igor on 25/12/17.
  */
 
-class Transaction(val value   : BigDecimal,
+class Transaction(val _id: Long = 0,
+                  val value   : BigDecimal,
                   val category: String = "Undefined",
                   val type    : Type,
                   val date    : Calendar = Calendar.getInstance())

@@ -1,5 +1,6 @@
 package com.igornm.financialcontrol.extension
 
+import com.igornm.financialcontrol.model.Type
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -25,6 +26,15 @@ fun String.convertForBigDecimal() : BigDecimal
         return BigDecimal(this)
     }
     return BigDecimal.ZERO
+}
+
+fun String.convertForType() : Type
+{
+    if(this == Type.INCOME.toString())
+    {
+        return Type.INCOME
+    }
+    return Type.EXPENSE
 }
 
 fun String.limitAtCharacter(character_limit: Int) : String

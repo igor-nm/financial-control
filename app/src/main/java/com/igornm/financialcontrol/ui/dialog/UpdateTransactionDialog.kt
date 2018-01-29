@@ -21,8 +21,9 @@ class UpdateTransactionDialog(
     fun dialogSettings(transaction : Transaction, transactionDelegate: (transition: Transaction) -> Unit)
     {
         val type = transaction.type
+        val _id   = transaction._id
 
-        super.dialogSettings(type, transactionDelegate)
+        super.dialogSettings(_id, type, transactionDelegate)
 
         initFields(transaction)
     }

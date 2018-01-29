@@ -30,17 +30,17 @@ abstract class TransactionDialog(private val context : Context,
     protected val dateField : EditText = viewChild.form_transacao_data
     protected val categoryField : Spinner = viewChild.form_transacao_categoria
 
-    abstract protected val titlePositiveButton: String
+    protected abstract val titlePositiveButton: String
 
-    fun dialogSettings(type: Type, transactionDelegate : (transaction: Transaction) -> Unit)
+    fun dialogSettings(_id: Long, type: Type, transactionDelegate : (transaction: Transaction) -> Unit)
     {
         dateSettings()
         categorySettings(type)
-        formSettings(type, transactionDelegate)
+        formSettings(_id, type, transactionDelegate)
     }
 
 
-    private fun formSettings(type: Type, transactionDelegate : (transaction: Transaction) -> Unit)
+    private fun formSettings(_id: Long, type: Type, transactionDelegate : (transaction: Transaction) -> Unit)
     {
         val title = getTitle(type)
 
@@ -52,7 +52,7 @@ abstract class TransactionDialog(private val context : Context,
                     val date = dateField.text.toString().convertForCalendar()
                     val category = categoryField.selectedItem.toString()
 
-                    val transaction = Transaction(value, category, type, date)
+                    val transaction = Transaction(_id, value = value, category = category, type = type, date = date)
 
                     transactionDelegate(transaction)
                 })
@@ -60,7 +60,7 @@ abstract class TransactionDialog(private val context : Context,
                 .show()
     }
 
-    abstract protected fun getTitle(type : Type) : Int
+    protected abstract fun getTitle(type : Type) : Int
 
     protected fun getCategories(type : Type) : Int
     {

@@ -6,7 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import com.igornm.financialcontrol.R
+import com.igornm.financialcontrol.database.dao.TransactionDAO
+import com.igornm.financialcontrol.extension.calendarForString
+import com.igornm.financialcontrol.extension.convertForCoinBrazilian
 import com.igornm.financialcontrol.model.Transaction
 import com.igornm.financialcontrol.model.Type
 import com.igornm.financialcontrol.ui.AbstractView
@@ -19,20 +23,21 @@ import kotlinx.android.synthetic.main.activity_lista_transacoes.*
  * Created by igor on 25/12/17.
  */
 
-class TransactionListActitivty: AppCompatActivity()
+class TransactionListActivity : AppCompatActivity()
 {
-    private val transactions: MutableList<Transaction> = mutableListOf()
+    private var transactions: MutableList<Transaction> = mutableListOf()
     private val viewActivity by lazy{ window.decorView }
     private val viewGroupActivity by lazy { viewActivity as ViewGroup }
+    private val transactionDAO by lazy { TransactionDAO(this) }
 
     override fun onCreate(savedInstanceState : Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_transacoes)
 
-        abstractSettings()
-        listSettings()
         fabSettings()
+        listSettings()
+        abstractSettings()
     }
 
     private fun fabSettings()
@@ -45,7 +50,7 @@ class TransactionListActitivty: AppCompatActivity()
     {
         lista_transacoes_adiciona_menu.close(true)
         AddTransactionDialog(viewGroupActivity, this)
-                .dialogSettings(type) { newTransaction ->
+                .dialogSettings(-1, type) { newTransaction ->
                     addTransaction(newTransaction)
                 }
 
@@ -53,14 +58,14 @@ class TransactionListActitivty: AppCompatActivity()
 
     private fun addTransaction(transaction : Transaction)
     {
-        transactions.add(transaction)
+        transactionDAO.insertOrUpdate(transaction)
         updateTransactions()
     }
 
     private fun updateTransactions()
     {
-        abstractSettings()
         listSettings()
+        abstractSettings()
     }
 
     private fun abstractSettings()
@@ -72,13 +77,14 @@ class TransactionListActitivty: AppCompatActivity()
 
     private fun listSettings()
     {
+        transactions = transactionDAO.findAll()
         val listTransactionAdapter = TransactionListAdapter(transactions, this)
         with(lista_transacoes_listview)
         {
             adapter = listTransactionAdapter
             setOnItemClickListener { _, _, position, _ ->
                 val transaction = transactions[position]
-                showDialogTransactionUpdate(transaction, position)
+                showDialogTransactionUpdate(transaction)
             }
             setOnCreateContextMenuListener { menu, _, _ ->
                 menu.add(Menu.NONE, 1, Menu.NONE, "Remover")
@@ -101,21 +107,22 @@ class TransactionListActitivty: AppCompatActivity()
 
     private fun removeTransaction(position : Int)
     {
-        transactions.removeAt(position)
+        val transaction = transactions[position]
+        transactionDAO.deleteTransaction(transaction._id)
         updateTransactions()
     }
 
-    private fun showDialogTransactionUpdate(transaction : Transaction, position : Int)
+    private fun showDialogTransactionUpdate(transaction: Transaction)
     {
         UpdateTransactionDialog(viewGroupActivity, this).
                 dialogSettings(transaction) {updatedTransaction ->
-                    updateTransaction(updatedTransaction, position)
+                    updateTransaction(updatedTransaction)
                 }
     }
 
-    private fun updateTransaction(transaction : Transaction, position : Int)
+    private fun updateTransaction(transaction : Transaction)
     {
-        transactions[position] = transaction
+        transactionDAO.insertOrUpdate(transaction)
         updateTransactions()
     }
 }
