@@ -2,11 +2,13 @@ package com.igornm.financialcontrol.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import com.facebook.stetho.Stetho
 import com.igornm.financialcontrol.R
 import com.igornm.financialcontrol.database.dao.TransactionDAO
 import com.igornm.financialcontrol.extension.calendarForString
@@ -34,6 +36,10 @@ class TransactionListActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_transacoes)
+
+        Stetho.initializeWithDefaults(this)
+
+        val months = transactionDAO.findMoths()
 
         fabSettings()
         listSettings()

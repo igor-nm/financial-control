@@ -20,6 +20,20 @@ fun String.convertForCalendar() : Calendar
     return calendar
 }
 
+fun String.SQLiteForCalendar() : Calendar
+{
+    val calendar : Calendar = Calendar.getInstance()
+    val date : Date = SimpleDateFormat("yyyy-mm-dd").parse(this)
+    calendar.time = date
+    return calendar
+}
+
+fun String.convertForSQLite() : String
+{
+    val date = this.split("/")
+    return "${date[2]}-${date[1]}-${date[0]}"
+}
+
 fun String.convertForBigDecimal() : BigDecimal
 {
     if (!this.isEmpty()) {
