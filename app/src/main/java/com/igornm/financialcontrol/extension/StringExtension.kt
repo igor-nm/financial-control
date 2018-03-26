@@ -11,6 +11,7 @@ import java.util.Date
  */
 
 private val FORMAT_BRAZILIAN = SimpleDateFormat("dd/MM/yyyy")
+private val FORMAT_DATABASE  = SimpleDateFormat("yyyy-mm-dd")
 
 fun String.convertForCalendar() : Calendar
 {
@@ -23,7 +24,7 @@ fun String.convertForCalendar() : Calendar
 fun String.SQLiteForCalendar() : Calendar
 {
     val calendar : Calendar = Calendar.getInstance()
-    val date : Date = SimpleDateFormat("yyyy-mm-dd").parse(this)
+    val date : Date = FORMAT_DATABASE.parse(this)
     calendar.time = date
     return calendar
 }
